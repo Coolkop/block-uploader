@@ -1,0 +1,126 @@
+version: "3"
+
+services:
+  file-storage-app:
+    container_name: file-storage-app
+    image: file-storage-app:latest
+    ports:
+      - "8082:80"
+    networks:
+      - file-storage
+    env_file:
+      - .env
+    depends_on:
+      - file-storage-psql
+      - file-storage-minio-0
+      - file-storage-minio-1
+      - file-storage-minio-2
+      - file-storage-minio-3
+      - file-storage-minio-4
+      - file-storage-minio-5
+
+  file-storage-psql:
+    container_name: file-storage-psql
+    image: postgres
+    environment:
+      POSTGRES_DB: "public"
+      POSTGRES_USER: "postgres"
+      POSTGRES_PASSWORD: "postgres"
+    ports:
+      - "54329:5432"
+    volumes:
+      - file-storage-psql:/var/lib/postgres/data
+    networks:
+      - file-storage
+
+  file-storage-minio-0:
+    container_name: file-storage-minio-0
+    image: quay.io/minio/minio:latest
+    ports:
+      - "50000:9000"
+      - "50100:9090"
+    command: "minio server /data --console-address :9090"
+    volumes:
+      - file-storage-minio-0:/data
+    networks:
+      - file-storage
+
+  file-storage-minio-1:
+    container_name: file-storage-minio-1
+    image: quay.io/minio/minio:latest
+    ports:
+      - "50001:9000"
+      - "50101:9090"
+    command: "minio server /data --console-address :9090"
+    volumes:
+      - file-storage-minio-1:/data
+    networks:
+      - file-storage
+
+  file-storage-minio-2:
+    container_name: file-storage-minio-2
+    image: quay.io/minio/minio:latest
+    ports:
+      - "50002:9000"
+      - "50102:9090"
+    command: "minio server /data --console-address :9090"
+    volumes:
+      - file-storage-minio-2:/data
+    networks:
+      - file-storage
+
+  file-storage-minio-3:
+    container_name: file-storage-minio-3
+    image: quay.io/minio/minio:latest
+    ports:
+      - "50003:9000"
+      - "50103:9090"
+    command: "minio server /data --console-address :9090"
+    volumes:
+      - file-storage-minio-3:/data
+    networks:
+      - file-storage
+
+  file-storage-minio-4:
+    container_name: file-storage-minio-4
+    image: quay.io/minio/minio:latest
+    ports:
+      - "50004:9000"
+      - "50104:9090"
+    command: "minio server /data --console-address :9090"
+    volumes:
+      - file-storage-minio-4:/data
+    networks:
+      - file-storage
+
+  file-storage-minio-5:
+    container_name: file-storage-minio-5
+    image: quay.io/minio/minio:latest
+    ports:
+      - "50005:9000"
+      - "50105:9090"
+    command: "minio server /data --console-address :9090"
+    volumes:
+      - file-storage-minio-5:/data
+    networks:
+      - file-storage
+
+networks:
+  file-storage:
+    driver: bridge
+
+volumes:
+  file-storage-psql:
+    external: false
+  file-storage-minio-0:
+    external: false
+  file-storage-minio-1:
+    external: false
+  file-storage-minio-2:
+    external: false
+  file-storage-minio-3:
+    external: false
+  file-storage-minio-4:
+    external: false
+  file-storage-minio-5:
+    external: false

@@ -1,0 +1,88 @@
+version: "3"
+
+services:
+  file-storage-test-psql:
+    container_name: file-storage-test-psql
+    image: postgres
+    environment:
+      POSTGRES_DB: "public"
+      POSTGRES_USER: "postgres"
+      POSTGRES_PASSWORD: "postgres"
+    volumes:
+      - file-storage-test-psql:/var/lib/postgres/data
+    networks:
+      - file-storage-test
+
+  file-storage-test-minio-0:
+    container_name: file-storage-test-minio-0
+    image: quay.io/minio/minio:latest
+    command: "minio server /data"
+    volumes:
+      - file-storage-test-minio-0:/data
+    networks:
+      - file-storage-test
+
+  file-storage-test-minio-1:
+    container_name: file-storage-test-minio-1
+    image: quay.io/minio/minio:latest
+    command: "minio server /data"
+    volumes:
+      - file-storage-test-minio-1:/data
+    networks:
+      - file-storage-test
+
+  file-storage-test-minio-2:
+    container_name: file-storage-test-minio-2
+    image: quay.io/minio/minio:latest
+    command: "minio server /data"
+    volumes:
+      - file-storage-test-minio-2:/data
+    networks:
+      - file-storage-test
+
+  file-storage-test-minio-3:
+    container_name: file-storage-test-minio-3
+    image: quay.io/minio/minio:latest
+    command: "minio server /data"
+    volumes:
+      - file-storage-test-minio-3:/data
+    networks:
+      - file-storage-test
+
+  file-storage-test-minio-4:
+    container_name: file-storage-test-minio-4
+    image: quay.io/minio/minio:latest
+    command: "minio server /data"
+    volumes:
+      - file-storage-test-minio-4:/data
+    networks:
+      - file-storage-test
+
+  file-storage-test-minio-5:
+    container_name: file-storage-test-minio-5
+    image: quay.io/minio/minio:latest
+    command: "minio server /data"
+    volumes:
+      - file-storage-test-minio-5:/data
+    networks:
+      - file-storage-test
+
+networks:
+  file-storage-test:
+    driver: bridge
+
+volumes:
+  file-storage-test-psql:
+    external: false
+  file-storage-test-minio-0:
+    external: false
+  file-storage-test-minio-1:
+    external: false
+  file-storage-test-minio-2:
+    external: false
+  file-storage-test-minio-3:
+    external: false
+  file-storage-test-minio-4:
+    external: false
+  file-storage-test-minio-5:
+    external: false
